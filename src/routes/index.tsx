@@ -2,10 +2,25 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Heart, Calendar, Clock, Sparkles } from "lucide-react";
 
-import coupleHero from "../assets/couple-hero.jpg";
-import moment1 from "../assets/moment-1.jpg";
-import moment2 from "../assets/moment-2.jpg";
-import moment3 from "../assets/moment-3.jpg";
+import heroAsset from "../assets/IMG-20260514-WA0049.jpg.asset.json";
+import minecraftAsset from "../assets/IMG-20260703-WA0026.jpg.asset.json";
+import oncaAsset from "../assets/IMG-20260720-WA0052.jpg.asset.json";
+import filtroAsset from "../assets/IMG-20260615-WA0014.jpg.asset.json";
+import voleiAsset from "../assets/IMG-20260318-WA0629.jpg.asset.json";
+import parque1Asset from "../assets/IMG-20260818-WA0012.jpg.asset.json";
+import parque2Asset from "../assets/IMG-20260818-WA0010.jpg.asset.json";
+import parque3Asset from "../assets/IMG-20260818-WA0011.jpg.asset.json";
+
+const photos = [
+  { src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
+  { src: parque2Asset.url, alt: "Ela sorrindo com uma flor no cabelo", caption: "Esse sorriso é meu lugar favorito" },
+  { src: voleiAsset.url, alt: "Ela jogando vôlei na quadra", caption: "Torcendo por você sempre" },
+  { src: parque1Asset.url, alt: "Ela no parque ao entardecer", caption: "Tardes que eu queria pausar" },
+  { src: oncaAsset.url, alt: "Ele ao lado de uma onça", caption: "Aventuras pra contar pra você" },
+  { src: filtroAsset.url, alt: "Nós dois com filtro engraçado", caption: "Rir com você é o melhor" },
+  { src: parque3Asset.url, alt: "Ela olhando para a câmera no fim de tarde", caption: "Cada detalhe seu" },
+];
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,9 +51,10 @@ function formatTimeSince(date: Date) {
 }
 
 function CountUp() {
-  const [elapsed, setElapsed] = useState(() => formatTimeSince(START_DATE));
+  const [elapsed, setElapsed] = useState<ReturnType<typeof formatTimeSince> | null>(null);
 
   useEffect(() => {
+    setElapsed(formatTimeSince(START_DATE));
     const timer = setInterval(() => {
       setElapsed(formatTimeSince(START_DATE));
     }, 1000 * 60);
@@ -46,11 +62,12 @@ function CountUp() {
   }, []);
 
   const items = [
-    { value: elapsed.months, label: "meses" },
-    { value: elapsed.days, label: "dias" },
-    { value: elapsed.hours, label: "horas" },
-    { value: elapsed.minutes, label: "minutos" },
+    { value: elapsed?.months, label: "meses" },
+    { value: elapsed?.days, label: "dias" },
+    { value: elapsed?.hours, label: "horas" },
+    { value: elapsed?.minutes, label: "minutos" },
   ];
+
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -60,7 +77,7 @@ function CountUp() {
           className="flex flex-col items-center rounded-2xl bg-card/80 p-4 shadow-sm backdrop-blur-sm"
         >
           <span className="font-heading text-3xl font-semibold text-primary sm:text-4xl">
-            {item.value}
+            {item.value ?? "—"}
           </span>
           <span className="text-xs uppercase tracking-widest text-muted-foreground">
             {item.label}
@@ -98,15 +115,14 @@ function Index() {
             </div>
 
             <div className="order-1 lg:order-2">
-              <div className="relative mx-auto aspect-[4/3] w-full max-w-xl overflow-hidden rounded-3xl shadow-2xl shadow-primary/10 lg:max-w-none">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl shadow-2xl shadow-primary/10">
                 <img
-                  src={coupleHero}
-                  alt="Casal abraçado sob um céu cor-de-rosa"
-                  width={1280}
-                  height={800}
+                  src={heroAsset.url}
+                  alt="Nós dois juntinhos"
                   className="h-full w-full object-cover"
                   loading="eager"
                 />
+
                 <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-sm font-medium text-foreground shadow-lg backdrop-blur-sm">
                   <Heart className="h-4 w-4 fill-primary text-primary" />
                   <span>Te amo</span>
@@ -178,51 +194,25 @@ function Index() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg lg:col-span-2">
-              <img
-                src={moment3}
-                alt="Pôr do sol colorido sobre o mar"
-                width={1008}
-                height={704}
-                loading="lazy"
-                className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <p className="absolute bottom-4 left-4 translate-y-2 font-heading text-xl text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                Cada pôr do sol ao seu lado é mais bonito
-              </p>
-            </div>
-
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg sm:row-span-2">
-              <img
-                src={moment1}
-                alt="Casal de mãos dadas caminhando na praia ao pôr do sol"
-                width={800}
-                height={1008}
-                loading="lazy"
-                className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <p className="absolute bottom-4 left-4 translate-y-2 font-heading text-xl text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                Caminhar com você é meu lugar favorito
-              </p>
-            </div>
-
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg lg:col-span-2">
-              <img
-                src={moment2}
-                alt="Duas xícaras de café juntas com flores ao redor"
-                width={816}
-                height={816}
-                loading="lazy"
-                className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <p className="absolute bottom-4 left-4 translate-y-2 font-heading text-xl text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                Nos pequenos gestos, o nosso amor
-              </p>
-            </div>
+            {photos.map((photo) => (
+              <div
+                key={photo.src}
+                className="group relative overflow-hidden rounded-2xl shadow-lg"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <p className="absolute bottom-4 left-4 right-4 translate-y-2 font-heading text-xl text-background opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  {photo.caption}
+                </p>
+              </div>
+            ))}
           </div>
+
         </div>
       </section>
 
