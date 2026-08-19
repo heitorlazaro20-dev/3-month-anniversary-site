@@ -192,51 +192,25 @@ function Index() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg lg:col-span-2">
-              <img
-                src={moment3}
-                alt="Pôr do sol colorido sobre o mar"
-                width={1008}
-                height={704}
-                loading="lazy"
-                className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <p className="absolute bottom-4 left-4 translate-y-2 font-heading text-xl text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                Cada pôr do sol ao seu lado é mais bonito
-              </p>
-            </div>
-
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg sm:row-span-2">
-              <img
-                src={moment1}
-                alt="Casal de mãos dadas caminhando na praia ao pôr do sol"
-                width={800}
-                height={1008}
-                loading="lazy"
-                className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <p className="absolute bottom-4 left-4 translate-y-2 font-heading text-xl text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                Caminhar com você é meu lugar favorito
-              </p>
-            </div>
-
-            <div className="group relative overflow-hidden rounded-2xl shadow-lg lg:col-span-2">
-              <img
-                src={moment2}
-                alt="Duas xícaras de café juntas com flores ao redor"
-                width={816}
-                height={816}
-                loading="lazy"
-                className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <p className="absolute bottom-4 left-4 translate-y-2 font-heading text-xl text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                Nos pequenos gestos, o nosso amor
-              </p>
-            </div>
+            {photos.map((photo) => (
+              <div
+                key={photo.src}
+                className="group relative overflow-hidden rounded-2xl shadow-lg"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <p className="absolute bottom-4 left-4 right-4 translate-y-2 font-heading text-xl text-background opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                  {photo.caption}
+                </p>
+              </div>
+            ))}
           </div>
+
         </div>
       </section>
 
