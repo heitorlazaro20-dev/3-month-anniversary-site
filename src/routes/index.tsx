@@ -113,15 +113,14 @@ function Index() {
             </div>
 
             <div className="order-1 lg:order-2">
-              <div className="relative mx-auto aspect-[4/3] w-full max-w-xl overflow-hidden rounded-3xl shadow-2xl shadow-primary/10 lg:max-w-none">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl shadow-2xl shadow-primary/10">
                 <img
-                  src={coupleHero}
-                  alt="Casal abraçado sob um céu cor-de-rosa"
-                  width={1280}
-                  height={800}
+                  src={heroAsset.url}
+                  alt="Nós dois juntinhos"
                   className="h-full w-full object-cover"
                   loading="eager"
                 />
+
                 <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-sm font-medium text-foreground shadow-lg backdrop-blur-sm">
                   <Heart className="h-4 w-4 fill-primary text-primary" />
                   <span>Te amo</span>
