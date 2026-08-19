@@ -105,7 +105,7 @@ function Index() {
                   width={1280}
                   height={800}
                   className="h-full w-full object-cover"
-                  priority
+                  loading="eager"
                 />
                 <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-sm font-medium text-foreground shadow-lg backdrop-blur-sm">
                   <Heart className="h-4 w-4 fill-primary text-primary" />
