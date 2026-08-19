@@ -51,9 +51,10 @@ function formatTimeSince(date: Date) {
 }
 
 function CountUp() {
-  const [elapsed, setElapsed] = useState(() => formatTimeSince(START_DATE));
+  const [elapsed, setElapsed] = useState<ReturnType<typeof formatTimeSince> | null>(null);
 
   useEffect(() => {
+    setElapsed(formatTimeSince(START_DATE));
     const timer = setInterval(() => {
       setElapsed(formatTimeSince(START_DATE));
     }, 1000 * 60);
@@ -61,11 +62,12 @@ function CountUp() {
   }, []);
 
   const items = [
-    { value: elapsed.months, label: "meses" },
-    { value: elapsed.days, label: "dias" },
-    { value: elapsed.hours, label: "horas" },
-    { value: elapsed.minutes, label: "minutos" },
+    { value: elapsed?.months, label: "meses" },
+    { value: elapsed?.days, label: "dias" },
+    { value: elapsed?.hours, label: "horas" },
+    { value: elapsed?.minutes, label: "minutos" },
   ];
+
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
