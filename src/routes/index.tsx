@@ -197,18 +197,21 @@ function Index() {
             {photos.map((photo) => (
               <div
                 key={photo.src}
-                className="group relative overflow-hidden rounded-2xl shadow-lg"
+                className="group overflow-hidden rounded-2xl bg-card shadow-lg"
               >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading="lazy"
-                  className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <p className="absolute bottom-4 left-4 right-4 translate-y-2 font-heading text-xl text-background opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  {photo.caption}
-                </p>
+                <div className="relative overflow-hidden">
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-4 text-center">
+                  <p className="font-heading text-lg text-foreground">
+                    {photo.caption}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
