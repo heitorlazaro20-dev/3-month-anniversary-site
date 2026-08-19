@@ -2,10 +2,25 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Heart, Calendar, Clock, Sparkles } from "lucide-react";
 
-import coupleHero from "../assets/couple-hero.jpg";
-import moment1 from "../assets/moment-1.jpg";
-import moment2 from "../assets/moment-2.jpg";
-import moment3 from "../assets/moment-3.jpg";
+import heroAsset from "../assets/IMG-20260514-WA0049.jpg.asset.json";
+import minecraftAsset from "../assets/IMG-20260703-WA0026.jpg.asset.json";
+import oncaAsset from "../assets/IMG-20260720-WA0052.jpg.asset.json";
+import filtroAsset from "../assets/IMG-20260615-WA0014.jpg.asset.json";
+import voleiAsset from "../assets/IMG-20260318-WA0629.jpg.asset.json";
+import parque1Asset from "../assets/IMG-20260818-WA0012.jpg.asset.json";
+import parque2Asset from "../assets/IMG-20260818-WA0010.jpg.asset.json";
+import parque3Asset from "../assets/IMG-20260818-WA0011.jpg.asset.json";
+
+const photos = [
+  { src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
+  { src: parque2Asset.url, alt: "Ela sorrindo com uma flor no cabelo", caption: "Esse sorriso é meu lugar favorito" },
+  { src: voleiAsset.url, alt: "Ela jogando vôlei na quadra", caption: "Torcendo por você sempre" },
+  { src: parque1Asset.url, alt: "Ela no parque ao entardecer", caption: "Tardes que eu queria pausar" },
+  { src: oncaAsset.url, alt: "Ele ao lado de uma onça", caption: "Aventuras pra contar pra você" },
+  { src: filtroAsset.url, alt: "Nós dois com filtro engraçado", caption: "Rir com você é o melhor" },
+  { src: parque3Asset.url, alt: "Ela olhando para a câmera no fim de tarde", caption: "Cada detalhe seu" },
+];
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
