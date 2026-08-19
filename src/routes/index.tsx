@@ -77,7 +77,7 @@ function CountUp() {
           className="flex flex-col items-center rounded-2xl bg-card/80 p-4 shadow-sm backdrop-blur-sm"
         >
           <span className="font-heading text-3xl font-semibold text-primary sm:text-4xl">
-            {item.value}
+            {item.value ?? "—"}
           </span>
           <span className="text-xs uppercase tracking-widest text-muted-foreground">
             {item.label}
