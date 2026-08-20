@@ -11,15 +11,18 @@ import parque1Asset from "../assets/IMG-20260818-WA0012.jpg.asset.json";
 import parque2Asset from "../assets/IMG-20260818-WA0010.jpg.asset.json";
 import parque3Asset from "../assets/IMG-20260818-WA0011.jpg.asset.json";
 
-const photos = [
-  { src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
-  { src: parque2Asset.url, alt: "Ela sorrindo com uma flor no cabelo", caption: "Esse sorriso é meu lugar favorito" },
-  { src: voleiAsset.url, alt: "Ela jogando vôlei na quadra", caption: "Torcendo por você sempre" },
-  { src: parque1Asset.url, alt: "Ela no parque ao entardecer", caption: "Tardes que eu queria pausar" },
-  { src: oncaAsset.url, alt: "Ele ao lado de uma onça", caption: "Aventuras pra contar pra você" },
-  { src: filtroAsset.url, alt: "Nós dois com filtro engraçado", caption: "Rir com você é o melhor" },
-  { src: parque3Asset.url, alt: "Ela olhando para a câmera no fim de tarde", caption: "Cada detalhe seu" },
+import { PhotoGallery, type GalleryPhoto } from "@/components/PhotoGallery";
+
+const photos: GalleryPhoto[] = [
+  { key: "IMG-20260703-WA0026", src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
+  { key: "IMG-20260818-WA0010", src: parque2Asset.url, alt: "Ela sorrindo com uma flor no cabelo", caption: "Esse sorriso é meu lugar favorito" },
+  { key: "IMG-20260318-WA0629", src: voleiAsset.url, alt: "Ela jogando vôlei na quadra", caption: "Torcendo por você sempre" },
+  { key: "IMG-20260818-WA0012", src: parque1Asset.url, alt: "Ela no parque ao entardecer", caption: "Tardes que eu queria pausar" },
+  { key: "IMG-20260720-WA0052", src: oncaAsset.url, alt: "Ele ao lado de uma onça", caption: "Aventuras pra contar pra você" },
+  { key: "IMG-20260615-WA0014", src: filtroAsset.url, alt: "Nós dois com filtro engraçado", caption: "Rir com você é o melhor" },
+  { key: "IMG-20260818-WA0011", src: parque3Asset.url, alt: "Ela olhando para a câmera no fim de tarde", caption: "Cada detalhe seu" },
 ];
+
 
 
 export const Route = createFileRoute("/")({
@@ -189,32 +192,12 @@ function Index() {
               Momentos que guardo com carinho
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Alguns dos instantes que fazem o nosso amor tão especial
+              Toque no lápis para escrever a legenda de cada foto
             </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {photos.map((photo) => (
-              <div
-                key={photo.src}
-                className="group overflow-hidden rounded-2xl bg-card shadow-lg"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    loading="lazy"
-                    className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <p className="font-heading text-lg text-foreground">
-                    {photo.caption}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <PhotoGallery photos={photos} />
+
 
         </div>
       </section>
