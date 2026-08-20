@@ -192,32 +192,12 @@ function Index() {
               Momentos que guardo com carinho
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Alguns dos instantes que fazem o nosso amor tão especial
+              Toque no lápis para escrever a legenda de cada foto
             </p>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {photos.map((photo) => (
-              <div
-                key={photo.src}
-                className="group overflow-hidden rounded-2xl bg-card shadow-lg"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={photo.src}
-                    alt={photo.alt}
-                    loading="lazy"
-                    className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <p className="font-heading text-lg text-foreground">
-                    {photo.caption}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <PhotoGallery photos={photos} />
+
 
         </div>
       </section>
