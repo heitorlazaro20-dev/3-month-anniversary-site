@@ -12,6 +12,7 @@ import parque2Asset from "../assets/IMG-20260818-WA0010.jpg.asset.json";
 import parque3Asset from "../assets/IMG-20260818-WA0011.jpg.asset.json";
 
 import { PhotoGallery, type GalleryPhoto } from "@/components/PhotoGallery";
+import { MusicPlayer } from "@/components/MusicPlayer";
 
 const photos: GalleryPhoto[] = [
   { key: "IMG-20260703-WA0026", src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
