@@ -40,7 +40,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const START_DATE = new Date("2026-05-19T00:00:00");
+const START_DATE = new Date("2026-05-30T00:00:00");
 
 function formatTimeSince(date: Date) {
   const now = new Date();
@@ -95,6 +95,7 @@ function CountUp() {
 function Index() {
   return (
     <main className="min-h-screen bg-background">
+      <MusicPlayer />
       {/* Hero */}
       <section className="relative overflow-hidden px-4 pb-16 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pt-20">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-soft/60 via-background to-background" />
@@ -114,7 +115,7 @@ function Index() {
               </p>
               <div className="mt-8 flex items-center gap-2 text-sm font-medium text-primary">
                 <Calendar className="h-4 w-4" />
-                <span>Desde 19 de maio de 2026</span>
+                <span>Desde 30 de maio de 2026</span>
               </div>
             </div>
 
