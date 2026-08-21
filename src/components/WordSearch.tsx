@@ -75,6 +75,7 @@ export function WordSearch() {
   const [found, setFound] = useState(false);
   const [celebrating, setCelebrating] = useState(false);
   const draggingRef = useRef(false);
+  const selectedRef = useRef<string[]>([]);
   const boardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -87,23 +88,28 @@ export function WordSearch() {
     const el = document.elementFromPoint(x, y) as HTMLElement | null;
     const key = el?.dataset?.['cell'];
     if (!key) return;
-    setSelected((prev) => (prev.includes(key) ? prev : [...prev, key]));
+    setSelected((prev) => {
+      if (prev.includes(key)) return prev;
+      const next = [...prev, key];
+      selectedRef.current = next;
+      return next;
+    });
   };
 
   const finish = () => {
     if (!draggingRef.current) return;
     draggingRef.current = false;
-    setSelected((prev) => {
-      const ok =
-        prev.length === TARGET_KEYS.length &&
-        TARGET_KEYS.every((k) => prev.includes(k));
-      if (ok) {
-        setFound(true);
-        setCelebrating(true);
-        return TARGET_KEYS;
-      }
-      return [];
-    });
+    const prev = selectedRef.current;
+    const ok =
+      prev.length === TARGET_KEYS.length &&
+      TARGET_KEYS.every((k) => prev.includes(k));
+    if (ok) {
+      setSelected(TARGET_KEYS);
+      setFound(true);
+      setCelebrating(true);
+    } else {
+      setSelected([]);
+    }
   };
 
   useEffect(() => {
@@ -114,6 +120,7 @@ export function WordSearch() {
       if (found) return;
       draggingRef.current = true;
       setSelected([]);
+      selectedRef.current = [];
       addFromPoint(e.clientX, e.clientY);
     };
     const move = (e: PointerEvent) => {
