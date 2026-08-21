@@ -12,12 +12,13 @@ function buildGrid() {
   const grid: string[][] = Array.from({ length: SIZE }, () =>
     Array.from(
       { length: SIZE },
-      () => LETTERS[Math.floor(Math.random() * LETTERS.length)],
+      () => LETTERS[Math.floor(Math.random() * LETTERS.length)] as string,
     ),
   );
   for (let i = 0; i < WORD.length; i++) {
-    grid[PLACEMENT.row + PLACEMENT.dr * i][PLACEMENT.col + PLACEMENT.dc * i] =
-      WORD[i];
+    grid[PLACEMENT.row + PLACEMENT.dr * i]![
+      PLACEMENT.col + PLACEMENT.dc * i
+    ] = WORD[i]!;
   }
   return grid;
 }
@@ -84,7 +85,7 @@ export function WordSearch() {
 
   const addFromPoint = (x: number, y: number) => {
     const el = document.elementFromPoint(x, y) as HTMLElement | null;
-    const key = el?.dataset?.cell;
+    const key = el?.dataset?.['cell'];
     if (!key) return;
     setSelected((prev) => (prev.includes(key) ? prev : [...prev, key]));
   };
