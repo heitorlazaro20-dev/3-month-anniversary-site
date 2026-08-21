@@ -76,8 +76,9 @@ export function ScratchCard({
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
-    const clientX = "touches" in event ? event.touches[0].clientX : event.clientX;
-    const clientY = "touches" in event ? event.touches[0].clientY : event.clientY;
+    const touch = "touches" in event ? event.touches[0] : null;
+    const clientX = touch ? touch.clientX : (event as MouseEvent).clientX;
+    const clientY = touch ? touch.clientY : (event as MouseEvent).clientY;
     return {
       x: clientX - rect.left,
       y: clientY - rect.top,
