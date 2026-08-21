@@ -188,6 +188,25 @@ function Index() {
         </div>
       </section>
 
+      {/* Scratch surprise */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center">
+            <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
+              Uma surpresa para você
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Passe o dedo na tela para revelar o que está escondido
+            </p>
+          </div>
+
+          <ScratchCard
+            imageUrl={scratchAsset.url}
+            message="tenho muito orgulho de você meu amoor você e muito maravilhosa, inteligente, linda e se qualquer dia alguém dizer ao contrário pode ter certeza ou e inveja ou e mentira"
+          />
+        </div>
+      </section>
+
       {/* Gallery */}
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
