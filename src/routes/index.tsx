@@ -15,6 +15,7 @@ import scratchAsset from "../assets/IMG-20260711-WA0036.jpg.asset.json";
 import { PhotoGallery, type GalleryPhoto } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
 import { ScratchCard } from "@/components/ScratchCard";
+import { WordSearch } from "@/components/WordSearch";
 
 const photos: GalleryPhoto[] = [
   { key: "IMG-20260703-WA0026", src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
