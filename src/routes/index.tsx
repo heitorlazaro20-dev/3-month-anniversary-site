@@ -10,9 +10,11 @@ import voleiAsset from "../assets/IMG-20260318-WA0629.jpg.asset.json";
 import parque1Asset from "../assets/IMG-20260818-WA0012.jpg.asset.json";
 import parque2Asset from "../assets/IMG-20260818-WA0010.jpg.asset.json";
 import parque3Asset from "../assets/IMG-20260818-WA0011.jpg.asset.json";
+import scratchAsset from "../assets/IMG-20260711-WA0036.jpg.asset.json";
 
 import { PhotoGallery, type GalleryPhoto } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
+import { ScratchCard } from "@/components/ScratchCard";
 
 const photos: GalleryPhoto[] = [
   { key: "IMG-20260703-WA0026", src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
@@ -183,6 +185,25 @@ function Index() {
               <p className="mt-1 text-lg text-muted-foreground">Eu</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Scratch surprise */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center">
+            <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
+              Uma surpresa para você
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Passe o dedo na tela para revelar o que está escondido
+            </p>
+          </div>
+
+          <ScratchCard
+            imageUrl={scratchAsset.url}
+            message="tenho muito orgulho de você meu amoor você e muito maravilhosa, inteligente, linda e se qualquer dia alguém dizer ao contrário pode ter certeza ou e inveja ou e mentira"
+          />
         </div>
       </section>
 
