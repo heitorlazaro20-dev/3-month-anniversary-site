@@ -208,6 +208,23 @@ function Index() {
         </div>
       </section>
 
+      {/* Word search */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center">
+            <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
+              Caça-palavras do amor
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Arraste o dedo pelas letras e encontre a palavra escondida
+            </p>
+          </div>
+
+          <WordSearch />
+        </div>
+      </section>
+
+
       {/* Gallery */}
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
