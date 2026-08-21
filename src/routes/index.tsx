@@ -15,6 +15,7 @@ import scratchAsset from "../assets/IMG-20260711-WA0036.jpg.asset.json";
 import { PhotoGallery, type GalleryPhoto } from "@/components/PhotoGallery";
 import { MusicPlayer } from "@/components/MusicPlayer";
 import { ScratchCard } from "@/components/ScratchCard";
+import { WordSearch } from "@/components/WordSearch";
 
 const photos: GalleryPhoto[] = [
   { key: "IMG-20260703-WA0026", src: minecraftAsset.url, alt: "Nós dois no cenário de Minecraft", caption: "Nosso mundo particular" },
@@ -206,6 +207,23 @@ function Index() {
           />
         </div>
       </section>
+
+      {/* Word search */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center">
+            <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
+              Caça-palavras do amor
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Arraste o dedo pelas letras e encontre a palavra escondida
+            </p>
+          </div>
+
+          <WordSearch />
+        </div>
+      </section>
+
 
       {/* Gallery */}
       <section className="px-4 py-16 sm:px-6 lg:px-8">
