@@ -100,9 +100,7 @@ export function WordSearch() {
     if (!draggingRef.current) return;
     draggingRef.current = false;
     const prev = selectedRef.current;
-    const ok =
-      prev.length === TARGET_KEYS.length &&
-      TARGET_KEYS.every((k) => prev.includes(k));
+    const ok = TARGET_KEYS.every((k) => prev.includes(k));
     if (ok) {
       setSelected(TARGET_KEYS);
       setFound(true);
