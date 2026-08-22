@@ -38,8 +38,6 @@ export function ScratchCard({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const [scratched, setScratched] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const isDrawingRef = useRef(false);
 
@@ -62,14 +60,7 @@ export function ScratchCard({
     canvas.style.height = `${height}px`;
     ctx.scale(dpr, dpr);
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = imageUrl;
-    img.onload = () => {
-      imageRef.current = img;
-      ctx.drawImage(img, 0, 0, width, height);
-      drawSilverLayer(ctx, width, height);
-    };
+    drawSilverLayer(ctx, width, height);
   }, [imageUrl]);
 
   const getPos = (event: MouseEvent | TouchEvent) => {
@@ -93,7 +84,7 @@ export function ScratchCard({
     const { x, y } = getPos(event);
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
-    ctx.arc(x, y, 28, 0, Math.PI * 2);
+    ctx.arc(x, y, 32, 0, Math.PI * 2);
     ctx.fill();
     ctx.globalCompositeOperation = "source-over";
   };
@@ -101,7 +92,7 @@ export function ScratchCard({
   const checkProgress = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d", { willReadFrequently: true });
-    if (!canvas || !ctx) return;
+    if (!canvas || !ctx || revealed) return;
 
     const width = canvas.width;
     const height = canvas.height;
@@ -117,16 +108,6 @@ export function ScratchCard({
 
     if (percent >= THRESHOLD) {
       setRevealed(true);
-      ctx.clearRect(0, 0, width, height);
-      if (imageRef.current) {
-        ctx.drawImage(
-          imageRef.current,
-          0,
-          0,
-          canvas.clientWidth,
-          canvas.clientHeight,
-        );
-      }
     }
   };
 
@@ -172,16 +153,20 @@ export function ScratchCard({
         ref={containerRef}
         className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-3xl border-4 border-white bg-muted shadow-2xl shadow-primary/10"
       >
+        <img
+          src={imageUrl}
+          alt="Surpresa"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
         <canvas
           ref={canvasRef}
           className="absolute inset-0 h-full w-full cursor-pointer touch-none"
           aria-label="Raspadinha: passe o dedo para revelar a foto"
         />
-        {!scratched && (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <Sparkles className="h-8 w-8 text-white/60" />
-          </div>
-        )}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <Sparkles className="h-8 w-8 text-white/60" />
+        </div>
       </div>
 
       <div
