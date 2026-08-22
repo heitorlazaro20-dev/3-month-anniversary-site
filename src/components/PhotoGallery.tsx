@@ -137,32 +137,40 @@ function CaptionEditor({
   );
 }
 
+const rotations = [-2, -1, 0, 1, 2];
+
 export function PhotoGallery({ photos }: { photos: GalleryPhoto[] }) {
   const { data: captions } = useCaptions();
 
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {photos.map((photo) => (
-        <div
-          key={photo.key}
-          className="group overflow-hidden rounded-2xl bg-card shadow-lg"
-        >
-          <div className="relative overflow-hidden">
-            <img
-              src={photo.src}
-              alt={photo.alt}
-              loading="lazy"
-              className="aspect-[3/4] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {photos.map((photo, index) => {
+        const rotation = rotations[index % rotations.length];
+        return (
+          <div
+            key={photo.key}
+            className="group transition-transform duration-500 hover:-translate-y-1 hover:rotate-0"
+            style={{ transform: `rotate(${rotation}deg)` }}
+          >
+            <div className="rounded-sm bg-[#fdfbf7] p-3 pb-5 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.18)] transition-shadow duration-500 group-hover:shadow-[0_16px_36px_-8px_rgba(0,0,0,0.22)]">
+              <div className="relative overflow-hidden bg-muted">
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="aspect-[3/4] w-full object-cover"
+                />
+              </div>
+              <div className="mt-4 text-center">
+                <CaptionEditor
+                  photoKey={photo.key}
+                  value={captions?.[photo.key] ?? photo.caption}
+                />
+              </div>
+            </div>
           </div>
-          <div className="p-4 text-center">
-            <CaptionEditor
-              photoKey={photo.key}
-              value={captions?.[photo.key] ?? photo.caption}
-            />
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
