@@ -38,7 +38,6 @@ export function ScratchCard({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imageRef = useRef<HTMLImageElement | null>(null);
   const [revealed, setRevealed] = useState(false);
   const isDrawingRef = useRef(false);
 
@@ -61,14 +60,7 @@ export function ScratchCard({
     canvas.style.height = `${height}px`;
     ctx.scale(dpr, dpr);
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = imageUrl;
-    img.onload = () => {
-      imageRef.current = img;
-      ctx.drawImage(img, 0, 0, width, height);
-      drawSilverLayer(ctx, width, height);
-    };
+    drawSilverLayer(ctx, width, height);
   }, [imageUrl]);
 
   const getPos = (event: MouseEvent | TouchEvent) => {
@@ -161,6 +153,12 @@ export function ScratchCard({
         ref={containerRef}
         className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-3xl border-4 border-white bg-muted shadow-2xl shadow-primary/10"
       >
+        <img
+          src={imageUrl}
+          alt="Surpresa"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
         <canvas
           ref={canvasRef}
           className="absolute inset-0 h-full w-full cursor-pointer touch-none"
