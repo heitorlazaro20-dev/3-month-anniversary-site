@@ -96,6 +96,7 @@ function CountUp() {
 }
 
 function Index() {
+  const [showForward, setShowForward] = useState(false);
   return (
     <main className="min-h-screen bg-background">
       <MusicPlayer />
