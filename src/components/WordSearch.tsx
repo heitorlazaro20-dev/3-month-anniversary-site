@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Heart } from "lucide-react";
 
-const SIZE = 8;
-const WORD = "TEAMO";
+const SIZE = 12;
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// Fixed diagonal placement so the puzzle is the same for everyone.
-const PLACEMENT = { row: 6, col: 1, dr: -1, dc: 1 };
+const WORDS = [
+  { word: "AMOR", row: 2, col: 1, dr: 0, dc: 1 },
+  { word: "LINDA", row: 3, col: 8, dr: 1, dc: 0 },
+  { word: "MARAVILHOSA", row: 10, col: 0, dr: 0, dc: 1 },
+];
 
 // Deterministic PRNG so SSR and client render the same grid.
 function mulberry32(seed: number) {
@@ -26,18 +28,19 @@ function buildGrid() {
       () => LETTERS[Math.floor(rand() * LETTERS.length)] as string,
     ),
   );
-  for (let i = 0; i < WORD.length; i++) {
-    grid[PLACEMENT.row + PLACEMENT.dr * i]![
-      PLACEMENT.col + PLACEMENT.dc * i
-    ] = WORD[i]!;
+  for (const { word, row, col, dr, dc } of WORDS) {
+    for (let i = 0; i < word.length; i++) {
+      grid[row + dr * i]![col + dc * i] = word[i]!;
+    }
   }
   return grid;
 }
 
-const TARGET_KEYS = Array.from(
-  { length: WORD.length },
-  (_, i) =>
-    `${PLACEMENT.row + PLACEMENT.dr * i}-${PLACEMENT.col + PLACEMENT.dc * i}`,
+const TARGET_KEYS = WORDS.flatMap(({ word, row, col, dr, dc }) =>
+  Array.from(
+    { length: word.length },
+    (_, i) => `${row + dr * i}-${col + dc * i}`,
+  ),
 );
 
 function HeartsRain() {
@@ -154,6 +157,17 @@ export function WordSearch() {
     <div className="mx-auto max-w-md">
       {celebrating && <HeartsRain />}
 
+      <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+        {WORDS.map(({ word }) => (
+          <span
+            key={word}
+            className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium uppercase tracking-wide text-primary"
+          >
+            {word}
+          </span>
+        ))}
+      </div>
+
       <div
         ref={boardRef}
         className="grid touch-none select-none gap-1 rounded-3xl bg-card p-3 shadow-xl shadow-primary/5 sm:gap-1.5 sm:p-4"
@@ -167,7 +181,7 @@ export function WordSearch() {
               <div
                 key={key}
                 data-cell={key}
-                className={`flex aspect-square items-center justify-center rounded-lg text-sm font-semibold uppercase transition-colors sm:text-base ${
+                className={`flex aspect-square items-center justify-center rounded-lg text-xs font-semibold uppercase transition-colors sm:text-sm ${
                   active
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-foreground/70"
@@ -187,7 +201,7 @@ export function WordSearch() {
             : "translate-y-2 opacity-0"
         }`}
       >
-        Você achou: TE AMO ❤️
+        Você achou: AMOR, LINDA, MARAVILHOSA ❤️
       </p>
     </div>
   );
