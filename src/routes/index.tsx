@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Heart, Calendar, Clock, Sparkles } from "lucide-react";
+import { Heart, Calendar, Clock, Sparkles, Gift } from "lucide-react";
 
 import heroAsset from "../assets/IMG-20260514-WA0049.jpg.asset.json";
 import minecraftAsset from "../assets/IMG-20260703-WA0026.jpg.asset.json";
@@ -96,6 +96,7 @@ function CountUp() {
 }
 
 function Index() {
+  const [showForward, setShowForward] = useState(false);
   return (
     <main className="min-h-screen bg-background">
       <MusicPlayer />
@@ -267,9 +268,19 @@ function Index() {
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <div className="rounded-3xl bg-gradient-to-br from-peach-soft/70 to-sky-soft/70 p-10 text-center shadow-xl shadow-primary/5 sm:p-14">
-            <h2 className="font-heading text-4xl leading-tight text-foreground sm:text-5xl lg:text-6xl">
-              Agora olha para frente
-            </h2>
+            {!showForward ? (
+              <button
+                onClick={() => setShowForward(true)}
+                className="group inline-flex items-center gap-3 rounded-full bg-background/90 px-8 py-4 text-lg font-medium text-foreground shadow-lg transition hover:scale-105 hover:shadow-xl"
+              >
+                <Gift className="h-5 w-5 text-primary transition group-hover:rotate-12" />
+                <span>clica aqui para ganhar presente</span>
+              </button>
+            ) : (
+              <h2 className="animate-in fade-in zoom-in font-heading text-4xl leading-tight text-foreground sm:text-5xl lg:text-6xl">
+                Agora olha para frente
+              </h2>
+            )}
           </div>
         </div>
       </section>
