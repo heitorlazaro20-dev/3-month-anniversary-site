@@ -99,7 +99,7 @@ export function WordSearch() {
 
   useEffect(() => {
     if (!celebrating) return;
-    const t = setTimeout(() => setCelebrating(false), 5000);
+    const t = setTimeout(() => setCelebrating(false), 2000);
     return () => clearTimeout(t);
   }, [celebrating]);
 
