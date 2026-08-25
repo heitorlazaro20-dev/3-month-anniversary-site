@@ -205,10 +205,6 @@ export function WordSearch() {
           row.map((letter, c) => {
             const key = `${r}-${c}`;
             const active = selected.includes(key);
-            const matched = allFound || ALL_TARGET_KEYS.includes(key);
-            const belongsToFound = WORD_KEYS.some(
-              ({ word, keys }) => foundWords.includes(word) && keys.includes(key),
-            );
 
             return (
               <div
@@ -217,11 +213,7 @@ export function WordSearch() {
                 className={`flex aspect-square items-center justify-center rounded-lg text-xs font-semibold uppercase transition-colors sm:text-sm ${
                   active
                     ? "bg-primary text-primary-foreground"
-                    : belongsToFound
-                      ? "bg-primary/40 text-primary-foreground"
-                      : matched
-                        ? "bg-primary/20 text-foreground"
-                        : "bg-muted text-foreground/70"
+                    : "bg-muted text-foreground/70"
                 }`}
               >
                 {letter}
