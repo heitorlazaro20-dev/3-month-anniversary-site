@@ -94,20 +94,22 @@ export function WordSearch() {
   const draggingRef = useRef(false);
   const selectedRef = useRef<string[]>([]);
   const boardRef = useRef<HTMLDivElement>(null);
+  const hasCelebratedRef = useRef(false);
 
   const allFound = foundWords.length === WORD_KEYS.length;
 
   useEffect(() => {
     if (!celebrating) return;
-    const t = setTimeout(() => setCelebrating(false), 2000);
+    const t = setTimeout(() => setCelebrating(false), 5000);
     return () => clearTimeout(t);
   }, [celebrating]);
 
   useEffect(() => {
-    if (allFound && !celebrating) {
+    if (allFound && !hasCelebratedRef.current) {
+      hasCelebratedRef.current = true;
       setCelebrating(true);
     }
-  }, [allFound, celebrating]);
+  }, [allFound]);
 
   const addFromPoint = (x: number, y: number) => {
     const el = document.elementFromPoint(x, y) as HTMLElement | null;
