@@ -10,6 +10,14 @@ const WORDS = [
   { word: "MARAVILHOSA", row: 10, col: 0, dr: 0, dc: 1 },
 ];
 
+const WORD_KEYS = WORDS.map(({ word, row, col, dr, dc }) => ({
+  word,
+  keys: Array.from(
+    { length: word.length },
+    (_, i) => `${row + dr * i}-${col + dc * i}`,
+  ),
+}));
+
 // Deterministic PRNG so SSR and client render the same grid.
 function mulberry32(seed: number) {
   return function () {
@@ -36,12 +44,7 @@ function buildGrid() {
   return grid;
 }
 
-const TARGET_KEYS = WORDS.flatMap(({ word, row, col, dr, dc }) =>
-  Array.from(
-    { length: word.length },
-    (_, i) => `${row + dr * i}-${col + dc * i}`,
-  ),
-);
+const ALL_TARGET_KEYS = WORD_KEYS.flatMap(({ keys }) => keys);
 
 function HeartsRain() {
   const hearts = useMemo(
@@ -86,17 +89,25 @@ function HeartsRain() {
 export function WordSearch() {
   const [grid] = useState(buildGrid);
   const [selected, setSelected] = useState<string[]>([]);
-  const [found, setFound] = useState(false);
+  const [foundWords, setFoundWords] = useState<string[]>([]);
   const [celebrating, setCelebrating] = useState(false);
   const draggingRef = useRef(false);
   const selectedRef = useRef<string[]>([]);
   const boardRef = useRef<HTMLDivElement>(null);
+
+  const allFound = foundWords.length === WORD_KEYS.length;
 
   useEffect(() => {
     if (!celebrating) return;
     const t = setTimeout(() => setCelebrating(false), 5000);
     return () => clearTimeout(t);
   }, [celebrating]);
+
+  useEffect(() => {
+    if (allFound && !celebrating) {
+      setCelebrating(true);
+    }
+  }, [allFound, celebrating]);
 
   const addFromPoint = (x: number, y: number) => {
     const el = document.elementFromPoint(x, y) as HTMLElement | null;
@@ -114,13 +125,20 @@ export function WordSearch() {
     if (!draggingRef.current) return;
     draggingRef.current = false;
     const prev = selectedRef.current;
-    const ok = TARGET_KEYS.every((k) => prev.includes(k));
-    if (ok) {
-      setSelected(TARGET_KEYS);
-      setFound(true);
-      setCelebrating(true);
+
+    const newlyFound = WORD_KEYS.filter(
+      ({ word, keys }) =>
+        !foundWords.includes(word) && keys.every((k) => prev.includes(k)),
+    ).map(({ word }) => word);
+
+    if (newlyFound.length > 0) {
+      const nextFound = [...foundWords, ...newlyFound];
+      setFoundWords(nextFound);
+      setSelected([]);
+      selectedRef.current = [];
     } else {
       setSelected([]);
+      selectedRef.current = [];
     }
   };
 
@@ -129,7 +147,7 @@ export function WordSearch() {
     if (!board) return;
 
     const start = (e: PointerEvent) => {
-      if (found) return;
+      if (allFound) return;
       draggingRef.current = true;
       setSelected([]);
       selectedRef.current = [];
@@ -151,21 +169,31 @@ export function WordSearch() {
       window.removeEventListener("pointerup", finish);
       window.removeEventListener("pointercancel", finish);
     };
-  }, [found]);
+  }, [allFound, foundWords]);
 
   return (
     <div className="mx-auto max-w-md">
       {celebrating && <HeartsRain />}
 
       <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
-        {WORDS.map(({ word }) => (
-          <span
-            key={word}
-            className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium uppercase tracking-wide text-primary"
-          >
-            {word}
-          </span>
-        ))}
+        {WORD_KEYS.map(({ word }) => {
+          const isFound = foundWords.includes(word);
+          return (
+            <span
+              key={word}
+              className={`relative rounded-full px-3 py-1 text-sm font-medium uppercase tracking-wide transition-colors ${
+                isFound
+                  ? "bg-primary/20 text-primary"
+                  : "bg-primary/10 text-primary"
+              }`}
+            >
+              {word}
+              {isFound && (
+                <span className="absolute inset-x-2 top-1/2 h-0.5 -translate-y-1/2 rounded-full bg-primary" />
+              )}
+            </span>
+          );
+        })}
       </div>
 
       <div
@@ -177,6 +205,11 @@ export function WordSearch() {
           row.map((letter, c) => {
             const key = `${r}-${c}`;
             const active = selected.includes(key);
+            const matched = allFound || ALL_TARGET_KEYS.includes(key);
+            const belongsToFound = WORD_KEYS.some(
+              ({ word, keys }) => foundWords.includes(word) && keys.includes(key),
+            );
+
             return (
               <div
                 key={key}
@@ -184,7 +217,11 @@ export function WordSearch() {
                 className={`flex aspect-square items-center justify-center rounded-lg text-xs font-semibold uppercase transition-colors sm:text-sm ${
                   active
                     ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-foreground/70"
+                    : belongsToFound
+                      ? "bg-primary/40 text-primary-foreground"
+                      : matched
+                        ? "bg-primary/20 text-foreground"
+                        : "bg-muted text-foreground/70"
                 }`}
               >
                 {letter}
@@ -196,12 +233,12 @@ export function WordSearch() {
 
       <p
         className={`mt-6 text-center font-heading text-2xl transition-all duration-500 sm:text-3xl ${
-          found
+          allFound
             ? "translate-y-0 text-primary opacity-100"
             : "translate-y-2 opacity-0"
         }`}
       >
-        Você achou: AMOR, LINDA, MARAVILHOSA ❤️
+        Você achou todas as palavras! ❤️
       </p>
     </div>
   );
