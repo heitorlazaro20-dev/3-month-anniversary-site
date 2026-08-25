@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Heart, Calendar, Clock, Sparkles } from "lucide-react";
+import { Heart, Calendar, Clock, Sparkles, Gift } from "lucide-react";
 
 import heroAsset from "../assets/IMG-20260514-WA0049.jpg.asset.json";
 import minecraftAsset from "../assets/IMG-20260703-WA0026.jpg.asset.json";
